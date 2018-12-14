@@ -1,14 +1,14 @@
 const gulp 							= require('gulp');
 const sass 							= require('gulp-sass');
 const postcss 						= require('gulp-postcss');
-const postcssCustomProperties 	= require('postcss-custom-properties');
-const autoprefixer 					= require('autoprefixer');
+const postcssCustomProperties = require('postcss-custom-properties');
+const autoprefixer 				= require('autoprefixer');
 const calc 							= require("postcss-calc")
 const sourcemaps 					= require('gulp-sourcemaps');
-const concat 							= require('gulp-concat');
-const uglify 							= require('gulp-uglify');
-const imagemin 						= require('gulp-imagemin');
-const del 								= require('del');
+const concat 						= require('gulp-concat');
+const uglify 						= require('gulp-uglify');
+const imagemin 					= require('gulp-imagemin');
+const del 							= require('del');
 
 sass.compiler = require('node-sass');
 
