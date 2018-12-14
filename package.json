@@ -1,0 +1,37 @@
+{
+  "name": "starter-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bewoldt/starter-kit.git"
+  },
+  "author": "brandon ewoldt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bewoldt/starter-kit/issues"
+  },
+  "homepage": "https://github.com/bewoldt/starter-kit#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "postcss-custom-properties": "^8.0.9"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.4.2",
+    "del": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "postcss-calc": "^7.0.1"
+  }
+}
