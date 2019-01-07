@@ -9,7 +9,7 @@ const concat 						= require('gulp-concat');
 const uglify 						= require('gulp-uglify');
 const imagemin 						= require('gulp-imagemin');
 const browserSync 					= require('browser-sync').create();
-const del 							= require('del');
+const del							= require('del');
 
 sass.compiler = require('node-sass');
 
