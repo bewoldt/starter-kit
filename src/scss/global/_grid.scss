@@ -1,0 +1,38 @@
+:root {
+	--container-width-xs: 37.5rem;
+	--container-width-sm: 45rem;
+	--container-width-md: 64rem;
+	--container-width-lg: 80rem;
+	--container-width-xl: 90rem;
+}
+
+// classes used to center content on x-axis and set content max width
+.container {
+	width: calc(100% - 2*var(--component-padding));
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container--full-width {
+	width: 100%;
+}
+
+.container--xs {
+	max-width: var(--container-width-xs);
+}
+
+.container--sm {
+	max-width: var(--container-width-sm);
+}
+
+.container--md {
+	max-width: var(--container-width-md);
+}
+
+.container--lg {
+	max-width: var(--container-width-lg);
+}
+
+.container--xl {
+	max-width: var(--container-width-xl);
+}

@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/bewoldt/starter-kit#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.2.0",
-    "@babel/register": "^7.0.0",
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",

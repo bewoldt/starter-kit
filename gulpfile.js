@@ -8,6 +8,7 @@ const sourcemaps 					= require('gulp-sourcemaps');
 const concat 						= require('gulp-concat');
 const uglify 						= require('gulp-uglify');
 const imagemin 					= require('gulp-imagemin');
+const browserSync 				= require('browser-sync').create();
 const del 							= require('del');
 
 sass.compiler = require('node-sass');
@@ -25,8 +26,8 @@ const paths = {
 		dest: 'dist/js/'
 	},
 	markup: {
-		src: 'src/templates/**/*.php',
-		dest: 'dist/templates/'
+		src: 'src/**/*.+(php|html)',
+		dest: 'dist/'
 	},
 	images: {
 		src: 'src/images/*',
@@ -35,7 +36,7 @@ const paths = {
 };
 
 function clean() {
-  return del([ paths.styles.dest ]);
+  return del([ paths.styles.dest, paths.markup.dest, paths.images.dest ]);
 }
 
 /*
@@ -44,10 +45,11 @@ function clean() {
 function styles() {
 	return gulp.src(paths.styles.src) // Gets all files ending with .scss in src/scss and children dirs
 		.pipe(sourcemaps.init())
-		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) // Passes it through a gulp-sass, log errors to console
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // Passes it through a gulp-sass, log errors to console
 		.pipe(postcss([ autoprefixer(), postcssCustomProperties({preserve: true}), calc() ]))
-		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(paths.styles.dest)); // Outputs it in the dist/css folder
+		.pipe(sourcemaps.write('./maps'))
+		.pipe(gulp.dest(paths.styles.dest)) // Outputs it in the dist/css folder
+		.pipe(browserSync.stream());
 }
 
 
@@ -57,23 +59,42 @@ function scripts() {
 		.pipe(uglify()) // Passes it through a uglify
 		.pipe(concat('main.min.js'))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(paths.scripts.dest)); // Outputs it in the dist/js folder
+		.pipe(gulp.dest(paths.scripts.dest)) // Outputs it in the dist/js folder
+		.pipe(browserSync.stream());
 }
 
 
 function markup() {
-	return gulp.src(paths.markup.src, { sourcemaps: true })// Gets all files ending with .php in src/templates and children dirs
-		.pipe(gulp.dest(paths.markup.dest)); // Outputs it in the dist/templates folder
+	return gulp.src(paths.markup.src, { sourcemaps: true })// Gets all markup files in the source folder and children dirs
+		.pipe(gulp.dest(paths.markup.dest)) // Outputs it in the dist/templates folder
+		.pipe(browserSync.reload({ // Reloading with Browser Sync
+			stream: true
+		}));
 }
 
-
+/*
+	* Minify images
+*/
 function images() {
 	return gulp.src(paths.images.src, {since: gulp.lastRun(images)})
 		.pipe(imagemin()) // Passes through image optimizer
 		.pipe(gulp.dest(paths.images.dest)); // Outputs it in the destination folder
 }
 
+/*
+	* Setup server using browserSync
+*/
+function serve() {
+    browserSync.init({
+        server: {
+            baseDir: "dist/"
+        }
+    });
+};
 
+/*
+	* Watch for file changes
+*/
 function watch() {
 	gulp.watch(paths.styles.src, styles);
 	gulp.watch(paths.scripts.src, scripts);
@@ -84,7 +105,7 @@ function watch() {
 /*
 	* Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
 */
-const build = gulp.series(clean, gulp.parallel(styles, scripts, markup, images, watch));
+const build = gulp.series(clean, gulp.parallel(styles, scripts, markup, images, serve, watch));
 
 
 /*
